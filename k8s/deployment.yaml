@@ -1,0 +1,38 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-conver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-conver
+  template:
+    metadata:
+      labels:
+        app: app-conver
+    spec:
+      containers:
+      - name: app-conver
+        image: luiz117/conversao-temperatura:v2
+        ports: 
+        - containerPort: 8080
+ 
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-conver
+spec:
+  selector:
+      app: app-conver
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30000
+  type: NodePort
+       
+
+      
